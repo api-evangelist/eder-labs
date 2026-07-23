@@ -1,0 +1,171 @@
+openapi: 3.1.0
+info:
+  title: Persona Ingestion Query API
+  version: 1.0.0
+  description: 'Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs. It ingests raw content (conversations, notes) for a user, extracts a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers natural-language RAG queries or returns structured insights over that memory. This specification is transcribed faithfully from the published FastAPI router source (server/routers/graph_api.py) and the docs/API.md reference of github.com/saxenauts/persona. Persona is self-hosted: the base URL below is the documented local default; deploy behind your own host and auth layer.'
+  license:
+    name: MIT
+    url: https://github.com/saxenauts/persona/blob/main/LICENSE
+  contact:
+    name: Persona (Eder Labs)
+    url: https://docs.buildpersona.ai/
+    email: utkarsh@buildpersona.ai
+  x-apievangelist:
+    source: https://github.com/saxenauts/persona/blob/main/server/routers/graph_api.py
+    docs: https://docs.buildpersona.ai/
+    method: searched
+servers:
+- url: http://localhost:8000/api/v1
+  description: Documented self-hosted local default (uvicorn / docker compose)
+tags:
+- name: Query
+  description: Retrieving memory via RAG and structured insights
+paths:
+  /users/{user_id}/rag/query:
+    post:
+      operationId: rag_query
+      summary: RAG query
+      description: Runs a retrieval-augmented-generation query over the user's memory and returns a natural-language answer. Query max length is 1000 characters.
+      tags:
+      - Query
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RAGQuery'
+      responses:
+        '200':
+          description: RAG answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAGResponse'
+        '400':
+          description: Missing or too-long query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: External service (LLM) error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{user_id}/ask:
+    post:
+      operationId: ask_insights
+      summary: Ask for structured insights
+      description: Asks a question over the user's memory and returns a structured result, optionally shaped by a caller-provided output_schema.
+      tags:
+      - Query
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AskRequest'
+      responses:
+        '200':
+          description: Structured insight result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AskResponse'
+        '400':
+          description: Missing request body or query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: External service (LLM) error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    AskRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          example: What are my preferences?
+        output_schema:
+          type: object
+          description: Optional caller-provided shape for the structured result.
+          additionalProperties: true
+    RAGResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          example: Based on your memories, you're working on the Q4 roadmap...
+    RAGQuery:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          maxLength: 1000
+          example: What projects am I working on?
+    AskResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          example:
+            preferences:
+            - remote work
+            - morning meetings
+            summary: User prefers flexible work arrangements
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9_-]+$

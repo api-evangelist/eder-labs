@@ -1,0 +1,41 @@
+openapi: 3.1.0
+info:
+  title: Persona Ingestion Meta API
+  version: 1.0.0
+  description: 'Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs. It ingests raw content (conversations, notes) for a user, extracts a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers natural-language RAG queries or returns structured insights over that memory. This specification is transcribed faithfully from the published FastAPI router source (server/routers/graph_api.py) and the docs/API.md reference of github.com/saxenauts/persona. Persona is self-hosted: the base URL below is the documented local default; deploy behind your own host and auth layer.'
+  license:
+    name: MIT
+    url: https://github.com/saxenauts/persona/blob/main/LICENSE
+  contact:
+    name: Persona (Eder Labs)
+    url: https://docs.buildpersona.ai/
+    email: utkarsh@buildpersona.ai
+  x-apievangelist:
+    source: https://github.com/saxenauts/persona/blob/main/server/routers/graph_api.py
+    docs: https://docs.buildpersona.ai/
+    method: searched
+servers:
+- url: http://localhost:8000/api/v1
+  description: Documented self-hosted local default (uvicorn / docker compose)
+tags:
+- name: Meta
+  description: Service metadata
+paths:
+  /version:
+    get:
+      operationId: get_version
+      summary: Get API version
+      description: Returns the current API version string.
+      tags:
+      - Meta
+      responses:
+        '200':
+          description: Current API version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example: 1.0.0

@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: Persona Ingestion Users API
+  version: 1.0.0
+  description: 'Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs. It ingests raw content (conversations, notes) for a user, extracts a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers natural-language RAG queries or returns structured insights over that memory. This specification is transcribed faithfully from the published FastAPI router source (server/routers/graph_api.py) and the docs/API.md reference of github.com/saxenauts/persona. Persona is self-hosted: the base URL below is the documented local default; deploy behind your own host and auth layer.'
+  license:
+    name: MIT
+    url: https://github.com/saxenauts/persona/blob/main/LICENSE
+  contact:
+    name: Persona (Eder Labs)
+    url: https://docs.buildpersona.ai/
+    email: utkarsh@buildpersona.ai
+  x-apievangelist:
+    source: https://github.com/saxenauts/persona/blob/main/server/routers/graph_api.py
+    docs: https://docs.buildpersona.ai/
+    method: searched
+servers:
+- url: http://localhost:8000/api/v1
+  description: Documented self-hosted local default (uvicorn / docker compose)
+tags:
+- name: Users
+  description: User (memory namespace) lifecycle
+paths:
+  /users/{user_id}:
+    post:
+      operationId: create_user
+      summary: Create a user
+      description: Creates a new user (memory namespace). Returns 201 when newly created, 200 when the user already exists. User IDs must match ^[a-zA-Z0-9_-]+$.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+        '200':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+        '422':
+          description: Invalid user ID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: delete_user
+      summary: Delete a user
+      description: Deletes an existing user and their memory namespace.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusMessage'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Invalid user ID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9_-]+$
+  schemas:
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User alice created successfully
+        status:
+          type: string
+          example: created
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
