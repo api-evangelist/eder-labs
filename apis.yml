@@ -1,8 +1,28 @@
 aid: eder-labs
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/eder-labs.png
 name: Eder Labs
-description: 'Eder Labs is a company surfaced as a portfolio company of accel and added to the API Evangelist
-  network as a stub for enrichment. Sector: cloud-saas. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Eder Labs builds infrastructure for using personal data in safer, more human
+  ways. Its current focus is Persona, an open-source (MIT) user-memory system for
+  AI agents that turns a person's digital footprint into a Graph-Vector hybrid
+  personal knowledge graph (Neo4j graph plus vector embeddings) and answers
+  natural-language RAG queries or returns structured insights over that memory.
+  Eder Labs also develops Fluid, a platform for exchanging sensitive intelligence
+  and running data science inside secure enclaves without compromising trust.
+  Persona ships as a self-hosted FastAPI service with a small REST API for
+  creating users, ingesting content, and querying memory. Eder Labs is backed by
+  Accel.
 url: https://raw.githubusercontent.com/api-evangelist/eder-labs/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,11 +32,131 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Cloud Saas
-apis: []
+- AI Agents
+- Memory
+- Knowledge Graph
+- Personalization
+- Data Privacy
+- Open Source
+- Developer Tools
+- RAG
+apis:
+- aid: eder-labs:eder-labs-ingestion-api
+  name: Eder Labs Ingestion API
+  description: Getting content into a user's memory
+  humanURL: https://docs.buildpersona.ai/
+  baseURL: http://localhost:8000/api/v1
+  tags:
+  - Ingestion
+  properties:
+  - type: OpenAPI
+    url: openapi/eder-labs-ingestion-api-openapi.yml
+  - type: Documentation
+    url: https://docs.buildpersona.ai/
+  - type: APIReference
+    url: https://github.com/saxenauts/persona/blob/main/docs/API.md
+  - type: Quickstart
+    url: https://docs.buildpersona.ai/quickstart
+  - type: Conventions
+    url: conventions/eder-labs-conventions.yml
+  - type: ErrorCatalog
+    url: errors/eder-labs-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/eder-labs-lifecycle.yml
+  - type: Conformance
+    url: conformance/eder-labs-conformance.yml
+  - type: DataModel
+    url: data-model/eder-labs-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/eder-labs-agentic-access.yml
+- aid: eder-labs:eder-labs-meta-api
+  name: Eder Labs Meta API
+  description: Service metadata
+  humanURL: https://docs.buildpersona.ai/
+  baseURL: http://localhost:8000/api/v1
+  tags:
+  - Meta
+  properties:
+  - type: OpenAPI
+    url: openapi/eder-labs-meta-api-openapi.yml
+  - type: Documentation
+    url: https://docs.buildpersona.ai/
+  - type: APIReference
+    url: https://github.com/saxenauts/persona/blob/main/docs/API.md
+  - type: Quickstart
+    url: https://docs.buildpersona.ai/quickstart
+  - type: Conventions
+    url: conventions/eder-labs-conventions.yml
+  - type: ErrorCatalog
+    url: errors/eder-labs-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/eder-labs-lifecycle.yml
+  - type: Conformance
+    url: conformance/eder-labs-conformance.yml
+  - type: DataModel
+    url: data-model/eder-labs-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/eder-labs-agentic-access.yml
+- aid: eder-labs:eder-labs-query-api
+  name: Eder Labs Query API
+  description: Retrieving memory via RAG and structured insights
+  humanURL: https://docs.buildpersona.ai/
+  baseURL: http://localhost:8000/api/v1
+  tags:
+  - Query
+  properties:
+  - type: OpenAPI
+    url: openapi/eder-labs-query-api-openapi.yml
+  - type: Documentation
+    url: https://docs.buildpersona.ai/
+  - type: APIReference
+    url: https://github.com/saxenauts/persona/blob/main/docs/API.md
+  - type: Quickstart
+    url: https://docs.buildpersona.ai/quickstart
+  - type: Conventions
+    url: conventions/eder-labs-conventions.yml
+  - type: ErrorCatalog
+    url: errors/eder-labs-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/eder-labs-lifecycle.yml
+  - type: Conformance
+    url: conformance/eder-labs-conformance.yml
+  - type: DataModel
+    url: data-model/eder-labs-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/eder-labs-agentic-access.yml
+- aid: eder-labs:eder-labs-users-api
+  name: Eder Labs Users API
+  description: User (memory namespace) lifecycle
+  humanURL: https://docs.buildpersona.ai/
+  baseURL: http://localhost:8000/api/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/eder-labs-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.buildpersona.ai/
+  - type: APIReference
+    url: https://github.com/saxenauts/persona/blob/main/docs/API.md
+  - type: Quickstart
+    url: https://docs.buildpersona.ai/quickstart
+  - type: Conventions
+    url: conventions/eder-labs-conventions.yml
+  - type: ErrorCatalog
+    url: errors/eder-labs-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/eder-labs-lifecycle.yml
+  - type: Conformance
+    url: conformance/eder-labs-conformance.yml
+  - type: DataModel
+    url: data-model/eder-labs-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/eder-labs-agentic-access.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +165,26 @@ maintainers:
 common:
 - type: Website
   url: https://www.eder.io/
+- type: Documentation
+  url: https://docs.buildpersona.ai/
+- type: GettingStarted
+  url: https://docs.buildpersona.ai/quickstart
+- type: GitHub
+  url: https://github.com/saxenauts/persona
+- type: LLMsTxt
+  url: llms/eder-labs-llms.txt
+- type: Support
+  url: https://github.com/saxenauts/persona/issues
+- type: TermsOfService
+  url: https://www.eder.io/terms
+- type: PrivacyPolicy
+  url: https://www.eder.io/privacy
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/eder-labs-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

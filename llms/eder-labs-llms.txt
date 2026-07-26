@@ -1,0 +1,16 @@
+# Persona
+
+## Docs
+
+- [Architecture](https://docs.buildpersona.ai/architecture.md): The Graph-Vector Hybrid Engine
+- [Development](https://docs.buildpersona.ai/development.md): Contributing and local development
+- [AI Coach Example](https://docs.buildpersona.ai/example.md): Building a personalized AI coach with Persona
+- [Ingestion](https://docs.buildpersona.ai/ingestion.md): Getting data into Persona
+- [Welcome to Persona](https://docs.buildpersona.ai/introduction.md): User Memory for Language Intelligent Apps
+- [LLM Providers](https://docs.buildpersona.ai/llm-providers.md): Configuration for different providers
+- [Memory Architecture](https://docs.buildpersona.ai/memory-architecture.md): Graph-Vector Hybrid Memory for AI Agents
+- [Memory Model](https://docs.buildpersona.ai/memory-model.md): Core Concepts
+- [Best Practices](https://docs.buildpersona.ai/product-design.md): Patterns and best practices
+- [Querying](https://docs.buildpersona.ai/querying.md): RAG and Structured Insights
+- [Quickstart](https://docs.buildpersona.ai/quickstart.md): Get Persona running in 5 minutes
+- [Retrieval](https://docs.buildpersona.ai/retrieval.md): Context Construction Pipeline

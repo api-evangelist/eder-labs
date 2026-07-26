@@ -1,0 +1,369 @@
+openapi: 3.1.0
+info:
+  title: Persona API
+  version: 1.0.0
+  description: >-
+    Persona is an open-source (MIT) user-memory system for AI agents, built by
+    Eder Labs. It ingests raw content (conversations, notes) for a user, extracts
+    a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers
+    natural-language RAG queries or returns structured insights over that memory.
+    This specification is transcribed faithfully from the published FastAPI
+    router source (server/routers/graph_api.py) and the docs/API.md reference of
+    github.com/saxenauts/persona. Persona is self-hosted: the base URL below is
+    the documented local default; deploy behind your own host and auth layer.
+  license:
+    name: MIT
+    url: https://github.com/saxenauts/persona/blob/main/LICENSE
+  contact:
+    name: Persona (Eder Labs)
+    url: https://docs.buildpersona.ai/
+    email: utkarsh@buildpersona.ai
+  x-apievangelist:
+    source: https://github.com/saxenauts/persona/blob/main/server/routers/graph_api.py
+    docs: https://docs.buildpersona.ai/
+    method: searched
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Documented self-hosted local default (uvicorn / docker compose)
+tags:
+  - name: Meta
+    description: Service metadata
+  - name: Users
+    description: User (memory namespace) lifecycle
+  - name: Ingestion
+    description: Getting content into a user's memory
+  - name: Query
+    description: Retrieving memory via RAG and structured insights
+paths:
+  /version:
+    get:
+      operationId: get_version
+      summary: Get API version
+      description: Returns the current API version string.
+      tags: [Meta]
+      responses:
+        '200':
+          description: Current API version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example: "1.0.0"
+  /users/{user_id}:
+    post:
+      operationId: create_user
+      summary: Create a user
+      description: >-
+        Creates a new user (memory namespace). Returns 201 when newly created,
+        200 when the user already exists. User IDs must match ^[a-zA-Z0-9_-]+$.
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusMessage' }
+        '200':
+          description: User already exists
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusMessage' }
+        '422':
+          description: Invalid user ID format
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    delete:
+      operationId: delete_user
+      summary: Delete a user
+      description: Deletes an existing user and their memory namespace.
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusMessage' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '422':
+          description: Invalid user ID format
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /users/{user_id}/ingest:
+    post:
+      operationId: ingest_data
+      summary: Ingest content
+      description: >-
+        Ingests a single piece of raw content into the user's memory. The content
+        is extracted into episodes/nodes/relationships and persisted to the graph.
+      tags: [Ingestion]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/IngestRequest' }
+      responses:
+        '201':
+          description: Content ingested
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/IngestResult' }
+        '400':
+          description: Empty or invalid content
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /users/{user_id}/ingest/batch:
+    post:
+      operationId: ingest_batch_data
+      summary: Batch ingest content
+      description: Ingests a list of content items into the user's memory in one call.
+      tags: [Ingestion]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/IngestBatchRequest' }
+      responses:
+        '201':
+          description: Batch ingested
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/IngestResult' }
+        '400':
+          description: Empty batch
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /users/{user_id}/rag/query:
+    post:
+      operationId: rag_query
+      summary: RAG query
+      description: >-
+        Runs a retrieval-augmented-generation query over the user's memory and
+        returns a natural-language answer. Query max length is 1000 characters.
+      tags: [Query]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RAGQuery' }
+      responses:
+        '200':
+          description: RAG answer
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RAGResponse' }
+        '400':
+          description: Missing or too-long query
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '502':
+          description: External service (LLM) error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /users/{user_id}/ask:
+    post:
+      operationId: ask_insights
+      summary: Ask for structured insights
+      description: >-
+        Asks a question over the user's memory and returns a structured result,
+        optionally shaped by a caller-provided output_schema.
+      tags: [Query]
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AskRequest' }
+      responses:
+        '200':
+          description: Structured insight result
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AskResponse' }
+        '400':
+          description: Missing request body or query
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '502':
+          description: External service (LLM) error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: Database (Neo4j) connection error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+components:
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9_-]+$'
+  schemas:
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User alice created successfully
+        status:
+          type: string
+          example: created
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
+    IngestRequest:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+          description: Raw text content to ingest.
+          example: "Had a great meeting with Sarah about the Q4 roadmap..."
+        source_type:
+          type: string
+          default: conversation
+          description: Type of content (conversation, notes, etc.)
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional metadata.
+    IngestBatchRequest:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/IngestRequest' }
+    IngestResult:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Data ingested successfully
+        memories_created:
+          type: integer
+          example: 3
+    RAGQuery:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          maxLength: 1000
+          example: What projects am I working on?
+    RAGResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          example: "Based on your memories, you're working on the Q4 roadmap..."
+    AskRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          example: What are my preferences?
+        output_schema:
+          type: object
+          description: Optional caller-provided shape for the structured result.
+          additionalProperties: true
+    AskResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          example:
+            preferences: ["remote work", "morning meetings"]
+            summary: User prefers flexible work arrangements

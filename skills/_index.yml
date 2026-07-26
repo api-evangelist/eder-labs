@@ -1,0 +1,12 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/eder-labs-persona-openapi.yml
+skills:
+- file: eder-labs-ingest-and-recall.md
+  name: Ingest content and recall it with a RAG query
+  api: openapi/eder-labs-persona-openapi.yml
+  operations: [create_user, ingest_data, ingest_batch_data, rag_query]
+- file: eder-labs-structured-insights.md
+  name: Get structured insights from a user's memory
+  api: openapi/eder-labs-persona-openapi.yml
+  operations: [create_user, ingest_data, ask_insights]

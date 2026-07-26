@@ -1,0 +1,22 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/eder-labs-persona-openapi.yml + https://github.com/saxenauts/persona
+versioning:
+  scheme: uri-path
+  current: v1
+  version_endpoint: /api/v1/version
+  reported_version: "1.0.0"
+  docs: https://docs.buildpersona.ai/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation policy or Sunset/Deprecation header support documented.
+sla:
+  url: null
+  note: Self-hosted OSS; no hosted SLA.
+status_page: null
+release_notes: https://github.com/saxenauts/persona/releases
+deprecated_operations: []
+note: >-
+  No StatusPage or Deprecation pointer is emitted — Persona is self-hosted OSS
+  and publishes neither a hosted status page nor a formal deprecation policy.

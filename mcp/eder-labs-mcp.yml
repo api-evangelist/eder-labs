@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/eder-labs-persona-openapi.yml
+note: >-
+  No official hosted/remote MCP server was found for Persona (searched docs,
+  npm @modelcontextprotocol, MCP registries). This is a DERIVED candidate tool
+  list — one tool per OpenAPI operation — that could front the self-hosted
+  Persona API. Not a published server.
+server:
+  name: persona
+  transport: http
+tools:
+- name: get_version
+  description: Get the Persona API version.
+  source_operation: openapi/eder-labs-persona-openapi.yml#get_version
+- name: create_user
+  description: Create a user (memory namespace).
+  source_operation: openapi/eder-labs-persona-openapi.yml#create_user
+- name: delete_user
+  description: Delete a user and their memory namespace.
+  source_operation: openapi/eder-labs-persona-openapi.yml#delete_user
+- name: ingest_data
+  description: Ingest a single piece of content into a user's memory.
+  source_operation: openapi/eder-labs-persona-openapi.yml#ingest_data
+- name: ingest_batch_data
+  description: Ingest a batch of content items into a user's memory.
+  source_operation: openapi/eder-labs-persona-openapi.yml#ingest_batch_data
+- name: rag_query
+  description: Run a RAG query over a user's memory and get a natural-language answer.
+  source_operation: openapi/eder-labs-persona-openapi.yml#rag_query
+- name: ask_insights
+  description: Ask for structured insights over a user's memory.
+  source_operation: openapi/eder-labs-persona-openapi.yml#ask_insights

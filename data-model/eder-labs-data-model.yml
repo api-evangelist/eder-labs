@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  github.com/saxenauts/persona (AGENTS.md unified memory model; persona/models,
+  server/utils/models.py) + openapi/eder-labs-persona-openapi.yml
+note: >-
+  Derived from the published source. Persona stores memory as a Graph-Vector
+  hybrid in Neo4j: a per-user personal knowledge graph of typed memory nodes and
+  relationships. The HTTP API exposes User, ingest, and query; the entities below
+  are the underlying model referenced in the codebase.
+entities:
+- name: User
+  description: A memory namespace, addressed by user_id (^[a-zA-Z0-9_-]+$).
+  api_addressable: true
+- name: Memory
+  description: >-
+    Unified memory record. Every ingested item becomes one of three memory
+    types — Episode, Psyche, or Goal (AGENTS.md "Unified Memory Model").
+  subtypes: [Episode, Psyche, Goal]
+- name: Node
+  description: A concept/entity node in the knowledge graph (name, properties, embedding).
+- name: Relationship
+  description: A typed edge between graph nodes (source, target, relation).
+relationships:
+- from: User
+  to: Memory
+  type: has_many
+  via: user_id
+- from: User
+  to: Node
+  type: has_many
+  via: user_id
+- from: Node
+  to: Node
+  type: has_many
+  via: Relationship
+- from: Relationship
+  to: Node
+  type: belongs_to
+  via: source
+- from: Relationship
+  to: Node
+  type: belongs_to
+  via: target

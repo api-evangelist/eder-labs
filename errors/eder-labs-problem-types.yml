@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/saxenauts/persona/blob/main/docs/API.md
+format: fastapi-detail
+envelope:
+  field: detail
+  media_type: application/json
+  note: >-
+    FastAPI default error envelope — a JSON object with a single string "detail"
+    field. Not RFC 9457 application/problem+json.
+problems:
+- status: 400
+  title: Bad Request
+  meaning: Invalid input (e.g. empty content, missing query, query over 1000 chars, empty batch).
+  source_operations:
+  - openapi/eder-labs-persona-openapi.yml#ingest_data
+  - openapi/eder-labs-persona-openapi.yml#ingest_batch_data
+  - openapi/eder-labs-persona-openapi.yml#rag_query
+  - openapi/eder-labs-persona-openapi.yml#ask_insights
+- status: 404
+  title: User not found
+  meaning: The referenced user_id does not exist.
+  source_operations:
+  - openapi/eder-labs-persona-openapi.yml#delete_user
+  - openapi/eder-labs-persona-openapi.yml#ingest_data
+  - openapi/eder-labs-persona-openapi.yml#rag_query
+  - openapi/eder-labs-persona-openapi.yml#ask_insights
+- status: 422
+  title: Invalid user ID format
+  meaning: user_id does not match the required pattern ^[a-zA-Z0-9_-]+$.
+  source_operations:
+  - openapi/eder-labs-persona-openapi.yml#create_user
+  - openapi/eder-labs-persona-openapi.yml#delete_user
+- status: 500
+  title: Internal server error
+  meaning: Unhandled server error while processing the request.
+- status: 502
+  title: External service (LLM) error
+  meaning: Upstream LLM provider (OpenAI/Anthropic/Gemini) error during query or insights.
+  source_operations:
+  - openapi/eder-labs-persona-openapi.yml#rag_query
+  - openapi/eder-labs-persona-openapi.yml#ask_insights
+- status: 503
+  title: Database connection error
+  meaning: Neo4j graph database is unavailable; retry later.
+  source_operations:
+  - openapi/eder-labs-persona-openapi.yml#ingest_data
+  - openapi/eder-labs-persona-openapi.yml#ingest_batch_data
+  - openapi/eder-labs-persona-openapi.yml#rag_query
+  - openapi/eder-labs-persona-openapi.yml#ask_insights

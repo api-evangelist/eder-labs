@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Persona API
+  version: 1.0.0
+extends: openapi/eder-labs-persona-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 3
+    x-apievangelist-notes: >-
+      Open-source (MIT) self-hosted FastAPI memory API. Small, well-typed
+      surface (7 operations). No built-in auth layer — deploy behind your own
+      gateway. FastAPI-default error envelope ({detail}); consider RFC 9457.
+- target: $.tags
+  update:
+    - name: AgentReady
+      description: Operations relevant to AI-agent memory workflows
+- target: $.paths['/users/{user_id}/ingest'].post
+  update:
+    x-apievangelist-flow: ingest-and-recall
+- target: $.paths['/users/{user_id}/rag/query'].post
+  update:
+    x-apievangelist-flow: ingest-and-recall
+- target: $.paths['/users/{user_id}/ask'].post
+  update:
+    x-apievangelist-flow: structured-insights

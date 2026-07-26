@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/eder-labs-persona-openapi.yml + https://docs.buildpersona.ai/
+authentication:
+  style: none-built-in
+  note: >-
+    The open-source Persona server ships no authentication layer. Deploy behind
+    your own gateway / reverse proxy and apply auth there. No API keys, tokens,
+    or OAuth in the published source.
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or idempotency contract documented.
+pagination:
+  supported: false
+  note: No list/collection endpoints; nothing to paginate.
+versioning:
+  style: uri-path
+  current: v1
+  base_path: /api/v1
+resource_model:
+  user_scoping: >-
+    All memory operations are scoped under a path user_id (a memory namespace);
+    pattern ^[a-zA-Z0-9_-]+$.
+error_envelope:
+  shape: '{ "detail": "<message>" }'
+  media_type: application/json
+  standard: fastapi-default
+  cross_ref: errors/eder-labs-problem-types.yml
+request_tracing:
+  request_id_header: null
+rate_limiting:
+  signaled: false
+  note: >-
+    The API has no built-in rate-limit headers; the underlying LLM clients have
+    an internal rate limiter (persona/llm/rate_limiter.py) but it is not exposed
+    on the HTTP surface.
+cross_refs:
+  errors: errors/eder-labs-problem-types.yml
+  lifecycle: lifecycle/eder-labs-lifecycle.yml
