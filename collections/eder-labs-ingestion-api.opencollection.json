@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Persona Ingestion API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ingestion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ingest content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/v1/users/:user_id/ingest",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ingests a single piece of raw content into the user's memory. The content is extracted into episodes/nodes/relationships and persisted to the graph."
+        },
+        {
+          "info": {
+            "name": "Batch ingest content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/v1/users/:user_id/ingest/batch",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ingests a list of content items into the user's memory in one call."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

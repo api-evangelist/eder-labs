@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Persona Ingestion Query API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Query",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "RAG query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/v1/users/:user_id/rag/query",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs a retrieval-augmented-generation query over the user's memory and returns a natural-language answer. Query max length is 1000 characters."
+        },
+        {
+          "info": {
+            "name": "Ask for structured insights",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/api/v1/users/:user_id/ask",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Asks a question over the user's memory and returns a structured result, optionally shaped by a caller-provided output_schema."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

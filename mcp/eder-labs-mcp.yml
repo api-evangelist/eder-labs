@@ -2,11 +2,9 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/eder-labs-persona-openapi.yml
-note: >-
-  No official hosted/remote MCP server was found for Persona (searched docs,
-  npm @modelcontextprotocol, MCP registries). This is a DERIVED candidate tool
-  list — one tool per OpenAPI operation — that could front the self-hosted
-  Persona API. Not a published server.
+note: No official hosted/remote MCP server was found for Persona (searched docs, npm @modelcontextprotocol,
+  MCP registries). This is a DERIVED candidate tool list — one tool per OpenAPI operation — that could
+  front the self-hosted Persona API. Not a published server.
 server:
   name: persona
   transport: http
@@ -32,3 +30,9 @@ tools:
 - name: ask_insights
   description: Ask for structured insights over a user's memory.
   source_operation: openapi/eder-labs-persona-openapi.yml#ask_insights
+deployment:
+  mode: none
+  verified: derived
+  tools: 7
+  checked: '2026-08-12'
+  source: catalog MCP census
