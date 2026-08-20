@@ -41,6 +41,17 @@ tags:
 - Knowledge Graph
 - Personalization
 - Data Privacy
+- Open-Source
+- Developer Tools
+- RAG
+tags_raw:
+- Company
+- Cloud Saas
+- AI Agents
+- Memory
+- Knowledge Graph
+- Personalization
+- Data Privacy
 - Open Source
 - Developer Tools
 - RAG
@@ -135,6 +146,8 @@ apis:
   humanURL: https://docs.buildpersona.ai/
   baseURL: http://localhost:8000/api/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
