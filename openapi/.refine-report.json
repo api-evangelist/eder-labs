@@ -1,10 +1,7 @@
 {
   "provider": "eder-labs",
   "sources": [
-    "eder-labs-ingestion-api-openapi.yml",
-    "eder-labs-meta-api-openapi.yml",
-    "eder-labs-query-api-openapi.yml",
-    "eder-labs-users-api-openapi.yml"
+    "_original/eder-labs-persona-openapi.yml"
   ],
   "outputs": [
     "eder-labs-ingestion-api-openapi.yml",
@@ -15,6 +12,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "eder-labs-persona-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "eder-labs-ingestion-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eder-labs-meta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eder-labs-query-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eder-labs-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Persona Ingestion API
   version: 1.0.0
-  description: 'Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs. It ingests raw content (conversations, notes) for a user, extracts a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers natural-language RAG queries or returns structured insights over that memory. This specification is transcribed faithfully from the published FastAPI router source (server/routers/graph_api.py) and the docs/API.md reference of github.com/saxenauts/persona. Persona is self-hosted: the base URL below is the documented local default; deploy behind your own host and auth layer.'
+  description: Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs.
   license:
     name: MIT
     url: https://github.com/saxenauts/persona/blob/main/LICENSE
@@ -124,15 +124,6 @@ components:
         memories_created:
           type: integer
           example: 3
-    IngestBatchRequest:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngestRequest'
     IngestRequest:
       type: object
       required:
@@ -158,6 +149,15 @@ components:
         detail:
           type: string
           example: User alice not found
+    IngestBatchRequest:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngestRequest'
   parameters:
     UserId:
       name: user_id

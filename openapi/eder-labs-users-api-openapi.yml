@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Persona Ingestion Users API
+  title: Persona Users API
   version: 1.0.0
-  description: 'Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs. It ingests raw content (conversations, notes) for a user, extracts a Graph-Vector hybrid memory (Neo4j graph + vector embeddings), and answers natural-language RAG queries or returns structured insights over that memory. This specification is transcribed faithfully from the published FastAPI router source (server/routers/graph_api.py) and the docs/API.md reference of github.com/saxenauts/persona. Persona is self-hosted: the base URL below is the documented local default; deploy behind your own host and auth layer.'
+  description: Persona is an open-source (MIT) user-memory system for AI agents, built by Eder Labs.
   license:
     name: MIT
     url: https://github.com/saxenauts/persona/blob/main/LICENSE
@@ -89,16 +89,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
-      schema:
-        type: string
-        pattern: ^[a-zA-Z0-9_-]+$
   schemas:
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
     StatusMessage:
       type: object
       properties:
@@ -108,10 +106,12 @@ components:
         status:
           type: string
           example: created
-    Error:
-      type: object
-      description: FastAPI default error envelope.
-      properties:
-        detail:
-          type: string
-          example: User alice not found
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9_-]+$
