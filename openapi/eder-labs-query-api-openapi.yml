@@ -114,16 +114,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
-      schema:
-        type: string
-        pattern: ^[a-zA-Z0-9_-]+$
   schemas:
+    AskResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          example:
+            preferences:
+            - remote work
+            - morning meetings
+            summary: User prefers flexible work arrangements
     AskRequest:
       type: object
       required:
@@ -158,14 +160,12 @@ components:
         detail:
           type: string
           example: User alice not found
-    AskResponse:
-      type: object
-      properties:
-        result:
-          type: object
-          additionalProperties: true
-          example:
-            preferences:
-            - remote work
-            - morning meetings
-            summary: User prefers flexible work arrangements
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      description: The unique identifier for the user. Pattern ^[a-zA-Z0-9_-]+$.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9_-]+$

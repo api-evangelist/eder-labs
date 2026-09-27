@@ -89,23 +89,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  schemas:
-    Error:
-      type: object
-      description: FastAPI default error envelope.
-      properties:
-        detail:
-          type: string
-          example: User alice not found
-    StatusMessage:
-      type: object
-      properties:
-        message:
-          type: string
-          example: User alice created successfully
-        status:
-          type: string
-          example: created
   parameters:
     UserId:
       name: user_id
@@ -115,3 +98,20 @@ components:
       schema:
         type: string
         pattern: ^[a-zA-Z0-9_-]+$
+  schemas:
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User alice created successfully
+        status:
+          type: string
+          example: created
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found

@@ -124,6 +124,15 @@ components:
         memories_created:
           type: integer
           example: 3
+    IngestBatchRequest:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngestRequest'
     IngestRequest:
       type: object
       required:
@@ -149,15 +158,6 @@ components:
         detail:
           type: string
           example: User alice not found
-    IngestBatchRequest:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngestRequest'
   parameters:
     UserId:
       name: user_id
