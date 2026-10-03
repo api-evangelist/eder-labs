@@ -115,15 +115,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    IngestResult:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Data ingested successfully
-        memories_created:
-          type: integer
-          example: 3
     IngestBatchRequest:
       type: object
       required:
@@ -133,6 +124,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IngestRequest'
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
     IngestRequest:
       type: object
       required:
@@ -151,13 +149,15 @@ components:
           additionalProperties:
             type: string
           description: Optional metadata.
-    Error:
+    IngestResult:
       type: object
-      description: FastAPI default error envelope.
       properties:
-        detail:
+        message:
           type: string
-          example: User alice not found
+          example: Data ingested successfully
+        memories_created:
+          type: integer
+          example: 3
   parameters:
     UserId:
       name: user_id
