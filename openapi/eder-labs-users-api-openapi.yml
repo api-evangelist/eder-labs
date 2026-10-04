@@ -90,6 +90,13 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
     StatusMessage:
       type: object
       properties:
@@ -99,13 +106,6 @@ components:
         status:
           type: string
           example: created
-    Error:
-      type: object
-      description: FastAPI default error envelope.
-      properties:
-        detail:
-          type: string
-          example: User alice not found
   parameters:
     UserId:
       name: user_id

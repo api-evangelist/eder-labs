@@ -115,39 +115,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    RAGResponse:
-      type: object
-      properties:
-        answer:
-          type: string
-          example: Based on your memories, you're working on the Q4 roadmap...
-    Error:
-      type: object
-      description: FastAPI default error envelope.
-      properties:
-        detail:
-          type: string
-          example: User alice not found
-    AskResponse:
-      type: object
-      properties:
-        result:
-          type: object
-          additionalProperties: true
-          example:
-            preferences:
-            - remote work
-            - morning meetings
-            summary: User prefers flexible work arrangements
-    RAGQuery:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          maxLength: 1000
-          example: What projects am I working on?
     AskRequest:
       type: object
       required:
@@ -160,6 +127,39 @@ components:
           type: object
           description: Optional caller-provided shape for the structured result.
           additionalProperties: true
+    RAGResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          example: Based on your memories, you're working on the Q4 roadmap...
+    RAGQuery:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          maxLength: 1000
+          example: What projects am I working on?
+    AskResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          example:
+            preferences:
+            - remote work
+            - morning meetings
+            summary: User prefers flexible work arrangements
+    Error:
+      type: object
+      description: FastAPI default error envelope.
+      properties:
+        detail:
+          type: string
+          example: User alice not found
   parameters:
     UserId:
       name: user_id
