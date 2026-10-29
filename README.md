@@ -64,6 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Eder Labs is a company surfaced as a portfolio company of accel and added to the API Evangelist network as a stub for enrichment. Sector: cloud-saas. This profile is a lead awaiting the enrichment pipeline.
+Eder Labs builds infrastructure for using personal data in safer, more human ways. Its current focus is Persona, an open-source (MIT) user-memory system for AI agents that turns a person's digital footprint into a Graph-Vector hybrid personal knowledge graph (Neo4j graph plus vector embeddings) and answers natural-language RAG queries or returns structured insights over that memory. Eder Labs also develops Fluid, a platform for exchanging sensitive intelligence and running data science inside secure enclaves without compromising trust. Persona ships as a self-hosted FastAPI service with a small REST API for creating users, ingesting content, and querying memory. Eder Labs is backed by Accel.
 
-Backed by: accel — https://www.eder.io/
+**Areas:** Company · Cloud Saas · AI Agents · Memory · Knowledge Graph · Personalization · Privacy · Open Source · Developer Tools · RAG
+
+## Eder Labs on APIs.io
+
+Everything profiled for Eder Labs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/eder-labs/](https://apis.io/providers/eder-labs/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Eder Labs Ingestion API](https://apis.io/apis/eder-labs/eder-labs-ingestion-api/) — Getting content into a user's memory
+- [Eder Labs Meta API](https://apis.io/apis/eder-labs/eder-labs-meta-api/) — Service metadata
+- [Eder Labs Query API](https://apis.io/apis/eder-labs/eder-labs-query-api/) — Retrieving memory via RAG and structured insights
+- [Eder Labs Users API](https://apis.io/apis/eder-labs/eder-labs-users-api/) — User (memory namespace) lifecycle
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [persona](https://apis.io/servers/eder-labs/persona/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Eder Labs Agentic Access](https://apis.io/agentic-access/eder-labs/eder-labs-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Persona Ingestion API](https://apis.io/collections/eder-labs/open-eder-labs-ingestion-api/)
+- [Persona Ingestion Meta API](https://apis.io/collections/eder-labs/open-eder-labs-meta-api/)
+- [Persona Ingestion Query API](https://apis.io/collections/eder-labs/open-eder-labs-query-api/)
+- [Persona Ingestion Users API](https://apis.io/collections/eder-labs/open-eder-labs-users-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Eder Labs Persona Overlay](https://apis.io/overlays/eder-labs/eder-labs-persona-overlay/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Eder Labs Domain Security](https://apis.io/security/eder-labs/eder-labs-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.eder.io/)
+- [Documentation](https://docs.buildpersona.ai/)
+- [Getting started](https://docs.buildpersona.ai/quickstart)
+- [Support](https://github.com/saxenauts/persona/issues)
+- [Terms of service](https://www.eder.io/terms)
+- [Privacy policy](https://www.eder.io/privacy)
+
+## API Evangelist rating
+
+**Kin Score 29.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 42.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 35.1 |
+| Access clarity | 21.1 |
+
+**Agent readiness 23.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/eder-labs/](https://apis.io/providers/eder-labs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Eder Labs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/eder-labs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
